@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<!--
+Project name(项目名称)：task5
+  File name(文件名): test1
+  Authors(作者）: mao
+  Author QQ：1296193245
+  GitHub：https://github.com/maomao124/
+  Date(创建日期)： 2022/5/26
+  Time(创建时间)： 16:52
+  Description(描述)： 无
+-->
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #CDimage img {
+            border-radius: 50%;
+        }
+
+    </style>
+</head>
+<body>
+
+
+<h3>简单音乐播放器</h3>
+<hr>
+
+<!--音乐文件的载入-->
+<audio id="music01" src="music/EndlessHorizon.mp3" preload></audio>
+
+<div id="CDimage">
+    <img src="image/sky.jpg"/>
+</div>
+
+<!--音量调节进度条-->
+<div>
+    <input id="volume" type="range" min="0" max="1" step="0.1" onchange="setVolume()"/>
+</div>
+
+<!--显示歌曲名称-->
+<div>
+    当前正在播放: <span id="title">EndlessHorizon</span>
+</div>
+
+<!--控件功能实现-->
+<div>
+    <!--toggleBtn1.上一首  toggleBtn2.播放  toggleBtn3.下一首-->
+    <button id="toggleBtn1" onclick="lastMusic()">
+        <img src="image/previous.png" width="50" height="50"/>
+    </button>
+
+    <button id="toggleBtn2" onclick="toggleMusic()">
+        <img src="image/play.png" width="50" height="50"/>
+    </button>
+
+    <button id="toggleBtn3" onclick="nextMusic()">
+        <img src="image/next.png" width="50" height="50"/>
+    </button>
+
+</div>
+
+<script>
+    //获取音频对象
+    var music = document.getElementById("music01");
+    //获取进度条
+    var volume = document.getElementById("volume");
+    //获取播放按钮
+    var toggleBtn = document.getElementById("toggleBtn2");
+    //获取播放标题
+    var title = document.getElementById("title");
+    //音乐路径
+    var list = ["music/EndlessHorizon.mp3", "music/月光下的云海.mp3"];
+    //音乐标题
+    var titlelist = ["EndlessHorizon", "月光下的云海"];
+    var i = 0;
+
+    function setVolume()
+    {
+        music.volume = volume.value;
+    }
+
+    //音乐播放/暂停切换方法
+    function toggleMusic()
+    {
+        if (music.paused)
+        {
+            music.play();//播放音乐
+            toggleBtn.innerHTML = '<img src="image/pause.png" width="50" height="50"/>';
+        }
+        else
+        {
+            music.pause();//暂停音乐
+            toggleBtn.innerHTML = '<img src="image/play.png" width="50" height="50"/>';
+        }
+    }
+
+    function lastMusic()
+    {
+        if (i == 0)
+        {
+            i = list.length - 1;
+        }
+        else
+        {
+            i--;
+        }
+        music.pause();
+        music.src = list[i];
+        title.innerHTML = titlelist[i];
+        music.play();
+    }
+
+    function nextMusic()
+    {
+        if (i == list.length - 1)
+        {
+            i = 0;
+        }
+        else
+        {
+            i++;
+        }
+        music.pause();
+        music.src = list[i];
+        title.innerHTML = titlelist[i];
+        music.play();
+
+    }
+</script>
+</body>
+</html>
